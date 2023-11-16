@@ -22,6 +22,26 @@ void D3D::Initialize()
 	SettingViewPort();
 }
 
+ID3D11Device D3D::GetDevice()
+{
+	return ID3D11Device();
+}
+
+ID3D11DeviceContext D3D::GetContext()
+{
+	return ID3D11DeviceContext();
+}
+
+IDXGISwapChain D3D::GetSC()
+{
+	return IDXGISwapChain();
+}
+
+ID3D11RenderTargetView D3D::GetRenderTargetView()
+{
+	return ID3D11RenderTargetView();
+}
+
 void D3D::SetSCchain()
 {
 	///////////////////////////Ç¢ÇÎÇ¢ÇÎèÄîıÇ∑ÇÈÇΩÇﬂÇÃê›íË///////////////////////////////
