@@ -8,10 +8,11 @@
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
 	Window* pWnd = new Window(hInstance, nCmdShow);
+	pWnd->Initialize();
 	pWnd->Execute();
 
-	D3D* pD3D = new D3D(pWnd->GetHWnd());
-	pD3D->Initialize();
+
+
 
 	return 0;
 }

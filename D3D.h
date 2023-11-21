@@ -21,12 +21,6 @@ public:
 	void SettingViewPort();
 	void Initialize();
 
-	ID3D11Device GetDevice();
-	ID3D11DeviceContext GetContext();
-	IDXGISwapChain GetSC();
-	ID3D11RenderTargetView GetRenderTargetView();
-
-
 	ID3D11Device* pDevice;		//デバイス
 	ID3D11DeviceContext* pContext;		//デバイスコンテキスト
 	IDXGISwapChain* pSwapChain;		//スワップチェイン

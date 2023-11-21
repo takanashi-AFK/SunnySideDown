@@ -1,5 +1,5 @@
 #include "Window.h"
-
+#include"D3D.h"
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -11,16 +11,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+void Window::Initialize()
+{
+    CreateWndClass();
+    pD3D = new D3D(hWnd);
+    
+    pD3D->Initialize();
+}
 
 void Window::Execute()
 {
-    CreateWndClass();
+   
     MsgLoop();
 }
 
 void Window::MsgLoop()
 {
-
+ 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -37,16 +44,15 @@ void Window::MsgLoop()
         else
         {
             //ゲームの処理
-
             //背景の色
             float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
 
             //画面をクリア
-            pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
+            pD3D->pContext->ClearRenderTargetView(pD3D->pRenderTargetView, clearColor);
 
             //描画処理
             //スワップ（バックバッファを表に表示する）
-            pSwapChain->Present(0, 0);
+            pD3D->pSwapChain->Present(0, 0);
 
         }
     }
@@ -65,12 +71,13 @@ Window::Window()
 Window::Window(HINSTANCE _hInstance, int _nCmdShow)
     :hInstance_(_hInstance),nCmdShow_(_nCmdShow)
 {
-
+ 
 }
 
 Window::~Window()
 {
 }
+
 
 void Window::CreateWndClass()
 {

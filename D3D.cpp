@@ -1,4 +1,5 @@
 #include "D3D.h"
+#include <iostream>
 
 D3D::D3D()
 {
@@ -7,7 +8,6 @@ D3D::D3D()
 D3D::D3D(HWND _hWnd)
 	:hWnd_(_hWnd)
 {
-
 }
 
 D3D::~D3D()
@@ -22,31 +22,11 @@ void D3D::Initialize()
 	SettingViewPort();
 }
 
-ID3D11Device D3D::GetDevice()
-{
-	return ID3D11Device();
-}
-
-ID3D11DeviceContext D3D::GetContext()
-{
-	return ID3D11DeviceContext();
-}
-
-IDXGISwapChain D3D::GetSC()
-{
-	return IDXGISwapChain();
-}
-
-ID3D11RenderTargetView D3D::GetRenderTargetView()
-{
-	return ID3D11RenderTargetView();
-}
 
 void D3D::SetSCchain()
 {
 	///////////////////////////いろいろ準備するための設定///////////////////////////////
 	//いろいろな設定項目をまとめた構造体
-	
 	//とりあえず全部0
 	ZeroMemory(&scDesc, sizeof(scDesc));
 
@@ -66,13 +46,19 @@ void D3D::SetSCchain()
 	scDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//バックバッファの使い道＝画面に描画するために
 	scDesc.SampleDesc.Count = 1;		//MSAA（アンチエイリアス）の設定
 	scDesc.SampleDesc.Quality = 0;		//　〃
+
+	if (scDesc.OutputWindow == nullptr) {
+		char msg[128];
+		sprintf_s(msg, "scDesc Setting failed with error 0x%X");
+		MessageBoxA(nullptr, msg, "Error", MB_OK | MB_ICONERROR);
+	}
 }
 
 void D3D::CreateDevContSc()
 {
 	////////////////上記設定をもとにデバイス、コンテキスト、スワップチェインを作成////////////////////////
 	D3D_FEATURE_LEVEL level;
-	D3D11CreateDeviceAndSwapChain(
+	HRESULT hr = D3D11CreateDeviceAndSwapChain(
 		nullptr,				// どのビデオアダプタを使用するか？既定ならばnullptrで
 		D3D_DRIVER_TYPE_HARDWARE,		// ドライバのタイプを渡す。ふつうはHARDWARE
 		nullptr,				// 上記をD3D_DRIVER_TYPE_SOFTWAREに設定しないかぎりnullptr
@@ -85,6 +71,13 @@ void D3D::CreateDevContSc()
 		&pDevice,				// 無事完成したDeviceアドレスが返ってくる
 		&level,					// 無事完成したDevice、Contextのレベルが返ってくる
 		&pContext);				// 無事完成したContextのアドレスが返ってくる
+
+	if (FAILED(hr)) {
+		char msg[128];
+		sprintf_s(msg, "D3D11CreateDeviceAndSwapChain failed with error 0x%X", hr);
+		MessageBoxA(nullptr, msg, "Error", MB_OK | MB_ICONERROR);
+		
+	}
 }
 
 void D3D::CreateRenderTargetView()
