@@ -10,9 +10,5 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	Window* pWnd = new Window(hInstance, nCmdShow);
 	pWnd->Initialize();
 	pWnd->Execute();
-
-
-
-
 	return 0;
 }

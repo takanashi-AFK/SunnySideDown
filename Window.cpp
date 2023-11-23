@@ -11,6 +11,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
     }
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
+
+
+Window::Window()
+    :hInstance_(nullptr), nCmdShow_(0)
+{
+}
+
+
+Window::Window(HINSTANCE _hInstance, int _nCmdShow)
+    :hInstance_(_hInstance),nCmdShow_(_nCmdShow)
+{
+ 
+}
+
+
 void Window::Initialize()
 {
     CreateWndClass();
@@ -27,7 +42,6 @@ void Window::Execute()
 
 void Window::MsgLoop()
 {
- 
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -63,16 +77,6 @@ HWND Window::GetHWnd()
     return hWnd;
 }
 
-Window::Window()
-    :hInstance_(nullptr), nCmdShow_(0)
-{
-}
-
-Window::Window(HINSTANCE _hInstance, int _nCmdShow)
-    :hInstance_(_hInstance),nCmdShow_(_nCmdShow)
-{
- 
-}
 
 Window::~Window()
 {

@@ -1,12 +1,21 @@
 #include "D3D.h"
 #include <iostream>
+#include <d3dcompiler.h>
 
-D3D::D3D()
-{
-}
+
 
 D3D::D3D(HWND _hWnd)
-	:hWnd_(_hWnd)
+	:hWnd_(_hWnd),
+	scDesc({}),
+
+	pDevice(nullptr),
+	pContext(nullptr),
+	pSwapChain(nullptr),
+	pRenderTargetView(nullptr),
+	pVertexLayout(nullptr),
+
+	pVertexShader(nullptr),
+	pPixelShader(nullptr)
 {
 }
 
@@ -20,6 +29,26 @@ void D3D::Initialize()
 	CreateDevContSc();
 	CreateRenderTargetView();
 	SettingViewPort();
+	InitShader();
+}
+
+void D3D::InitShader()
+{
+	// create Vertex Shader
+	ID3DBlob* pCompileVS = nullptr;
+	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+
+	pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
+
+	pCompileVS->Release();
+
+	// create Pixel Shader
+	ID3DBlob* pCompilePS = nullptr;
+	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+
+	pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
+
+	pCompilePS->Release();
 }
 
 
@@ -27,7 +56,6 @@ void D3D::SetSCchain()
 {
 	///////////////////////////いろいろ準備するための設定///////////////////////////////
 	//いろいろな設定項目をまとめた構造体
-	//とりあえず全部0
 	ZeroMemory(&scDesc, sizeof(scDesc));
 
 	//描画先のフォーマット
