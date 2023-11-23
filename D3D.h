@@ -46,6 +46,9 @@ public:
 
 	//Shader//
 	void InitShader();
+	void InitVertexShader();
+	void InitPixelShader();
+	void CreateRasterizer();
 
 	ID3D11VertexShader* pVertexShader;			//頂点シェーダー
 	ID3D11PixelShader* pPixelShader;			//ピクセルシェーダー

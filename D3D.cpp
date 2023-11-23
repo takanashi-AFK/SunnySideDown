@@ -35,7 +35,19 @@ void D3D::Initialize()
 
 void D3D::InitShader()
 {
-	// create Vertex Shader
+	InitVertexShader();
+	InitPixelShader();
+	CreateRasterizer();
+
+	//setting for Device Context
+	pContext->VSSetShader(pVertexShader, NULL, 0);	//VertexShader
+	pContext->PSSetShader(pPixelShader, NULL, 0);	//PixelShader
+	pContext->IASetInputLayout(pVertexLayout);	//VertexShader
+	pContext->RSSetState(pRasterizerState);		//Rasterizer
+}
+
+void D3D::InitVertexShader()
+{// create Vertex Shader
 	ID3DBlob* pCompileVS = nullptr;
 	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
 
@@ -51,16 +63,20 @@ void D3D::InitShader()
 	pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
 
 	pCompileVS->Release();
+}
 
-	// create Pixel Shader
+void D3D::InitPixelShader()
+{// create Pixel Shader
 	ID3DBlob* pCompilePS = nullptr;
 	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
 
 	pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
 
 	pCompilePS->Release();
+}
 
-	//Create Rasterizer
+void D3D::CreateRasterizer()
+{//Create Rasterizer
 
 	D3D11_RASTERIZER_DESC rdc = {};
 
@@ -71,12 +87,6 @@ void D3D::InitShader()
 
 	rdc.FrontCounterClockwise = FALSE;
 	pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
-
-	//setting for Device Context
-	pContext->VSSetShader(pVertexShader, NULL, 0);	//VertexShader
-	pContext->PSSetShader(pPixelShader, NULL, 0);	//PixelShader
-	pContext->IASetInputLayout(pVertexLayout);	//VertexShader
-	pContext->RSSetState(pRasterizerState);		//Rasterizer
 }
 
 
