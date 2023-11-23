@@ -6,11 +6,12 @@
 #include"Global.h"
 #include "Window.h"
 
+
 //リンカ
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-
+class Quad;
 
 class D3D
 {
@@ -44,11 +45,16 @@ public:
 	ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
 	ID3D11InputLayout* pVertexLayout;			//頂点インプットレイアウト
 
+	ID3D11Texture2D* pDepthStencil;			//深度ステンシル
+	ID3D11DepthStencilView* pDepthStencilView;		//深度ステンシルビュー
+
 	//Shader//
 	void InitShader();
 	void InitVertexShader();
 	void InitPixelShader();
 	void CreateRasterizer();
+	void Draw();
+	void Update();
 
 	ID3D11VertexShader* pVertexShader;			//頂点シェーダー
 	ID3D11PixelShader* pPixelShader;			//ピクセルシェーダー
@@ -58,7 +64,7 @@ public:
 	//other
 	HWND hWnd_;
 	DXGI_SWAP_CHAIN_DESC scDesc;
-
+	Quad* qu;
 	void Release();
 };
 

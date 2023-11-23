@@ -23,6 +23,8 @@ public:
 
 	HWND GetHWnd();
 
+
+
 	void Release();
 private:
 	HINSTANCE hInstance_;

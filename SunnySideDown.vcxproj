@@ -129,11 +129,13 @@
   <ItemGroup>
     <ClCompile Include="D3D.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Quad.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="D3D.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="Quad.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

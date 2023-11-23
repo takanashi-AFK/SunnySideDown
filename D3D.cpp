@@ -1,7 +1,7 @@
 #include "D3D.h"
 #include <iostream>
 #include <d3dcompiler.h>
-
+#include"Quad.h"
 
 
 D3D::D3D(HWND _hWnd)
@@ -31,6 +31,11 @@ void D3D::Initialize()
 	CreateRenderTargetView();
 	SettingViewPort();
 	InitShader();
+
+	//Quadの初期化
+	qu= new Quad(this);
+	qu->Initialize();
+
 }
 
 void D3D::InitShader()
@@ -113,12 +118,6 @@ void D3D::SetSCchain()
 	scDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;	//バックバッファの使い道＝画面に描画するために
 	scDesc.SampleDesc.Count = 1;		//MSAA（アンチエイリアス）の設定
 	scDesc.SampleDesc.Quality = 0;		//　〃
-
-	if (scDesc.OutputWindow == nullptr) {
-		char msg[128];
-		sprintf_s(msg, "scDesc Setting failed with error 0x%X");
-		MessageBoxA(nullptr, msg, "Error", MB_OK | MB_ICONERROR);
-	}
 }
 
 void D3D::CreateDevContSc()
@@ -173,9 +172,25 @@ void D3D::SettingViewPort()
 	vp.TopLeftX = 0;	//左
 	vp.TopLeftY = 0;	//上
 
+	//深度ステンシルビューの作成
+	D3D11_TEXTURE2D_DESC descDepth;
+	descDepth.Width = WINDOW_WIDTH;
+	descDepth.Height = WINDOW_HEIGHT;
+	descDepth.MipLevels = 1;
+	descDepth.ArraySize = 1;
+	descDepth.Format = DXGI_FORMAT_D32_FLOAT;
+	descDepth.SampleDesc.Count = 1;
+	descDepth.SampleDesc.Quality = 0;
+	descDepth.Usage = D3D11_USAGE_DEFAULT;
+	descDepth.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	descDepth.CPUAccessFlags = 0;
+	descDepth.MiscFlags = 0;
+	pDevice->CreateTexture2D(&descDepth, NULL, &pDepthStencil);
+	pDevice->CreateDepthStencilView(pDepthStencil, NULL, &pDepthStencilView);
+
 	//データを画面に描画するための一通りの設定（パイプライン）
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
-	pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
+	pContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);            // 描画先を設定
 	pContext->RSSetViewports(1, &vp);
 }
 
@@ -190,4 +205,28 @@ void D3D::Release()
 	pSwapChain->Release();
 	pContext->Release();
 	pDevice->Release();
+}
+
+void D3D::Draw()
+{
+	//ゲームの処理
+	//背景の色
+	float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
+
+	//画面をクリア
+	pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
+
+	//深度バッファクリア
+	pContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+	//描画処理
+	qu->Draw();
+	
+}
+
+void D3D::Update()
+{
+	Draw();
+	//スワップ（バックバッファを表に表示する）
+	pSwapChain->Present(0, 0);
 }

@@ -1,5 +1,6 @@
 #include "Window.h"
 #include"D3D.h"
+#include"Quad.h"
 //ウィンドウプロシージャ（何かあった時によばれる関数）
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -36,7 +37,7 @@ void Window::Initialize()
 
 void Window::Execute()
 {
-   
+
     MsgLoop();
 }
 
@@ -58,16 +59,7 @@ void Window::MsgLoop()
         else
         {
             //ゲームの処理
-            //背景の色
-            float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };//R,G,B,A
-
-            //画面をクリア
-            pD3D->pContext->ClearRenderTargetView(pD3D->pRenderTargetView, clearColor);
-
-            //描画処理
-            //スワップ（バックバッファを表に表示する）
-            pD3D->pSwapChain->Present(0, 0);
-
+            pD3D->Update();
         }
     }
 }
@@ -77,12 +69,13 @@ HWND Window::GetHWnd()
     return hWnd;
 }
 
+
+
 void Window::Release()
 {
-    D3D* pD3D;
-    HWND hWnd;
-    int nCmdShow_;
-    HINSTANCE hInstance_;
+    SAFE_RELEASE(pD3D);
+    SAFE_DELETE(hWnd);
+    SAFE_DELETE(hInstance_);
 }
 
 

@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include"Window.h"
 #include"D3D.h"
+#include"Quad.h"
 
 
 //エントリーポイント
@@ -10,5 +11,6 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	Window* pWnd = new Window(hInstance, nCmdShow);
 	pWnd->Initialize();
 	pWnd->Execute();
+
 	return 0;
 }
