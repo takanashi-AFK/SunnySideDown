@@ -77,6 +77,14 @@ HWND Window::GetHWnd()
     return hWnd;
 }
 
+void Window::Release()
+{
+    D3D* pD3D;
+    HWND hWnd;
+    int nCmdShow_;
+    HINSTANCE hInstance_;
+}
+
 
 Window::~Window()
 {
@@ -86,7 +94,7 @@ Window::~Window()
 void Window::CreateWndClass()
 {
     //ウィンドウクラス（設計図）を作成
-    WNDCLASSEX wc;
+    WNDCLASSEX wc = {};
     RegisterClassEx(&wc);  //クラスを登録
 
     //ウィンドウサイズの計算

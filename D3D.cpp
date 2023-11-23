@@ -15,7 +15,8 @@ D3D::D3D(HWND _hWnd)
 	pVertexLayout(nullptr),
 
 	pVertexShader(nullptr),
-	pPixelShader(nullptr)
+	pPixelShader(nullptr),
+	pRasterizerState(nullptr)
 {
 }
 
@@ -40,6 +41,15 @@ void D3D::InitShader()
 
 	pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
 
+	//Vartex Input Layout
+	//入力されたバッファがどんなデータ構造か
+	D3D11_INPUT_ELEMENT_DESC layout[] = {
+
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
+	};
+
+	pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
+
 	pCompileVS->Release();
 
 	// create Pixel Shader
@@ -49,7 +59,26 @@ void D3D::InitShader()
 	pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
 
 	pCompilePS->Release();
+
+	//Create Rasterizer
+
+	D3D11_RASTERIZER_DESC rdc = {};
+
+	//////////CULL MODE IS HERE//////////
+	rdc.CullMode = D3D11_CULL_BACK;
+	rdc.FillMode = D3D11_FILL_SOLID;
+	//////////CULL MODE IS HERE//////////
+
+	rdc.FrontCounterClockwise = FALSE;
+	pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
+
+	//setting for Device Context
+	pContext->VSSetShader(pVertexShader, NULL, 0);	//VertexShader
+	pContext->PSSetShader(pPixelShader, NULL, 0);	//PixelShader
+	pContext->IASetInputLayout(pVertexLayout);	//VertexShader
+	pContext->RSSetState(pRasterizerState);		//Rasterizer
 }
+
 
 
 void D3D::SetSCchain()
@@ -138,4 +167,17 @@ void D3D::SettingViewPort()
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
 	pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);            // 描画先を設定
 	pContext->RSSetViewports(1, &vp);
+}
+
+void D3D::Release()
+{
+	pRasterizerState->Release();
+	pVertexLayout->Release();
+	pPixelShader->Release();
+	pVertexShader->Release();
+
+	pRenderTargetView->Release();
+	pSwapChain->Release();
+	pContext->Release();
+	pDevice->Release();
 }

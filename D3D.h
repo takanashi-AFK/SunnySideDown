@@ -42,17 +42,20 @@ public:
 	ID3D11DeviceContext* pContext;				//デバイスコンテキスト
 	IDXGISwapChain* pSwapChain;					//スワップチェイン
 	ID3D11RenderTargetView* pRenderTargetView;	//レンダーターゲットビュー
-	ID3D11InputLayout* pVertexLayout;	//頂点インプットレイアウト
+	ID3D11InputLayout* pVertexLayout;			//頂点インプットレイアウト
 
 	//Shader//
 	void InitShader();
 
 	ID3D11VertexShader* pVertexShader;			//頂点シェーダー
-	ID3D11PixelShader* pPixelShader;		//ピクセルシェーダー
+	ID3D11PixelShader* pPixelShader;			//ピクセルシェーダー
+	ID3D11RasterizerState* pRasterizerState;	//ラスタライザー
 
 
 	//other
 	HWND hWnd_;
 	DXGI_SWAP_CHAIN_DESC scDesc;
+
+	void Release();
 };
 

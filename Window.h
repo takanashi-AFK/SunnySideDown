@@ -22,6 +22,8 @@ public:
 	void MsgLoop();
 
 	HWND GetHWnd();
+
+	void Release();
 private:
 	HINSTANCE hInstance_;
 	int nCmdShow_;
