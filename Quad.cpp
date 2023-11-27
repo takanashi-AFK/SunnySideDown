@@ -23,8 +23,10 @@ void Quad::Initialize()
 	{
 		XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),	// TopLeft
 		XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	// TopRight
-		XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	// BotLeft	
 		XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	// BotRight
+		XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),	// BotLeft	
+
+
 	};
 
 	// VertexBufferSetting
@@ -40,7 +42,7 @@ void Quad::Initialize()
 	pD3D->pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
 
 	//IndexData
-	int index[] = { 0,2,3, 0,1,2 };
+	int index[] = { 0,1,2,0,2,3 };
 
 	// Generate Index Buffer
 	D3D11_BUFFER_DESC   bd;
