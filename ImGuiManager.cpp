@@ -20,6 +20,7 @@ void ImGuiManager::Update()
 	ImGui::NewFrame();
 	Feature();
 	ImGui::End();
+	
 }
 
 void ImGuiManager::Draw()
