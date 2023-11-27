@@ -1,6 +1,7 @@
 #include "Window.h"
 #include"D3D.h"
 #include"Quad.h"
+#include"ImGuiManager.h"
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
@@ -41,7 +42,6 @@ void Window::Initialize()
     
     pD3D->Initialize();
     ImGuiManager::Initialize(hWnd,pD3D);
-
 }
 
 void Window::Execute()
@@ -67,23 +67,11 @@ void Window::MsgLoop()
         //メッセージなし
         else
         {
+            ImGuiManager::Update();
+            ImGuiManager::Draw();
+
             //ゲームの処理
             pD3D->Update();
-            //ImGuiの更新処理
-            ImGui_ImplDX11_NewFrame();
-            ImGui_ImplWin32_NewFrame();
-            ImGui::NewFrame();
-            ImGui::Begin("Hello, world!");//ImGuiの処理を開始
-            {
-                //この中にしたい処理を記述
-                //描画されるボタンを押したら...
-                if (ImGui::Button("button")) {
-                    PostQuitMessage(0);	//プログラム終了
-                }
-
-            }
-            ImGui::End();//ImGuiの処理を終了
-
         }
     }
 }

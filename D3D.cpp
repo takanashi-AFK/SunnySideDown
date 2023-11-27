@@ -221,11 +221,6 @@ void D3D::Draw()
 
 	//•`‰æˆ—
 	qu->Draw();
-
-	//ImGui‚Ì•`‰æˆ—
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
 }
 
 void D3D::Update()

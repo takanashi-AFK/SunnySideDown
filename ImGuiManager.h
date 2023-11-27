@@ -11,5 +11,12 @@ namespace ImGuiManager
 	void Initialize(HWND _hWnd, D3D* _pD3D);
 
 	void Update();
+
+	void Draw();
+
+	void Feature();
+
+	void Release();
+
 };
 

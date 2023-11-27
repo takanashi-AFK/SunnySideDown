@@ -14,4 +14,36 @@ void ImGuiManager::Initialize(HWND _hWnd,D3D *_pD3D)
 
 void ImGuiManager::Update()
 {
+	//ImGuiの更新処理
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	Feature();
+	ImGui::End();
+}
+
+void ImGuiManager::Draw()
+{
+	//ImGuiの描画処理
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+void ImGuiManager::Feature()
+{
+	ImGui::Begin("Hello, world!");//ImGuiの処理を開始
+		//この中にしたい処理を記述
+		//描画されるボタンを押したら...
+		if (ImGui::Button("button")) {
+			PostQuitMessage(0);	//プログラム終了
+		}
+
+}
+
+void ImGuiManager::Release()
+{
+	//ImGuiの開放処理
+	ImGui_ImplDX11_Shutdown();
+	ImGui::DestroyContext();
+
 }
