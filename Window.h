@@ -3,7 +3,7 @@
 //インクルード
 #include <Windows.h>
 #include"Global.h"
-
+#include"ImGuiManager.h"
 
 class D3D;
 class Window
