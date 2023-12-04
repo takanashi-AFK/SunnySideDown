@@ -29,3 +29,4 @@ void Model::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV)
 void Model::LoadTexture(const wchar_t* filename, Mesh& dst, const aiMaterial* src)
 {
 }
+//
