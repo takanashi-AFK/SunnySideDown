@@ -16,6 +16,9 @@
     <Filter Include="imgui">
       <UniqueIdentifier>{6cd2bd06-f8d7-497c-8adf-e2ecfce5323c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assimp">
+      <UniqueIdentifier>{8ab90936-180d-4da0-9311-95c02544a96d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -97,5 +100,19 @@
     <FxCompile Include="Simple3D.hlsl">
       <Filter>リソース ファイル</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assimp\dll\assimp-vc143-mt.dll">
+      <Filter>Assimp</Filter>
+    </None>
+    <None Include="Assimp\dll\minizip.dll">
+      <Filter>Assimp</Filter>
+    </None>
+    <None Include="Assimp\dll\pugixml.dll">
+      <Filter>Assimp</Filter>
+    </None>
+    <None Include="Assimp\dll\zlib1.dll">
+      <Filter>Assimp</Filter>
+    </None>
   </ItemGroup>
 </Project>

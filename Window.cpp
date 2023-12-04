@@ -31,7 +31,6 @@ Window::Window()
 Window::Window(HINSTANCE _hInstance, int _nCmdShow)
     :hInstance_(_hInstance),nCmdShow_(_nCmdShow)
 {
- 
 }
 
 
@@ -41,7 +40,6 @@ void Window::Initialize()
     pD3D = new D3D(hWnd);
     
     pD3D->Initialize();
-    ImGuiManager::Initialize(hWnd,pD3D);
 }
 
 void Window::Execute()
@@ -67,9 +65,6 @@ void Window::MsgLoop()
         //メッセージなし
         else
         {
-            ImGuiManager::Update();
-            ImGuiManager::Draw();
-
             //ゲームの処理
             pD3D->Update();
         }
