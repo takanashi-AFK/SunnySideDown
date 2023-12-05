@@ -6,6 +6,7 @@
 #include"ImGuiManager.h"
 
 class D3D;
+class Quad;
 class Window
 {
 public:
@@ -30,7 +31,7 @@ private:
 	HINSTANCE hInstance_;
 	int nCmdShow_;
 	HWND hWnd;
-	D3D* pD3D;
+	Quad *qu;
 };
 
 //プロトタイプ宣言

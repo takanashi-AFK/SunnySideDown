@@ -1,5 +1,4 @@
 #include "Quad.h"
-#include <DirectXMath.h>
 
 using namespace DirectX;
 Quad::Quad()
@@ -65,6 +64,7 @@ void Quad::Initialize()
 
 void Quad::Draw()
 {
+	D3D& pD3D = D3D::GetInstance();
 	//コンスタントバッファに渡す情報
 	XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
 	XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
@@ -92,6 +92,7 @@ void Quad::Draw()
 	//コンスタントバッファ
 	pD3D.pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	pD3D.pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+	pD3D.pContext->DrawIndexed(6, 0, 0);
 }
 
 void Quad::Release()

@@ -1,7 +1,8 @@
 #pragma once
 
 #include "D3D.h"
-
+#include <DirectXMath.h>
+using namespace DirectX;
 struct CONSTANT_BUFFER
 {
 	XMMATRIX	matWVP;

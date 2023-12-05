@@ -1,6 +1,8 @@
 #include "Window.h"
 #include"D3D.h"
 #include"ImGuiManager.h"
+#include"Quad.h"
+
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //ウィンドウプロシージャ（何かあった時によばれる関数）
@@ -39,11 +41,12 @@ void Window::Initialize()
     D3D& pD3D = D3D::GetInstance();
     pD3D.Initialize(hWnd);
     ImGuiManager::Initialize(hWnd,&pD3D);
+    qu = new Quad;
+    qu->Initialize();
 }
 
 void Window::Execute()
 {
-
     MsgLoop();
 }
 
@@ -70,6 +73,8 @@ void Window::MsgLoop()
             pD3D.Draw();
             ImGuiManager::Draw();
 
+            qu->Draw();
+
             //ゲームの処理
             pD3D.Update();
         }
@@ -85,7 +90,6 @@ HWND Window::GetHWnd()
 
 void Window::Release()
 {
-    SAFE_RELEASE(pD3D);
     SAFE_DELETE(hWnd);
     SAFE_DELETE(hInstance_);
 }

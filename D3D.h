@@ -5,6 +5,7 @@
 #include <d3d11.h>
 #include"Global.h"
 #include "Window.h"
+#include<DirectXMath.h>
 
 
 //ƒŠƒ“ƒJ
