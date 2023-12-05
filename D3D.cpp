@@ -217,6 +217,8 @@ void D3D::Draw()
 
 }
 
+
+
 void D3D::Update()
 {
 	Draw();
