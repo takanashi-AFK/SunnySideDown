@@ -37,8 +37,8 @@ void Window::Initialize()
 {
     CreateWndClass();
     pD3D = new D3D(hWnd);
-    
     pD3D->Initialize();
+    ImGuiManager::Initialize(hWnd,pD3D);
 }
 
 void Window::Execute()
@@ -64,6 +64,11 @@ void Window::MsgLoop()
         //メッセージなし
         else
         {
+            ImGuiManager::Update();
+            ImGuiManager::Feature();
+            pD3D->Draw();
+            ImGuiManager::Draw();
+
             //ゲームの処理
             pD3D->Update();
         }

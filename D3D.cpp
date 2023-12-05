@@ -30,8 +30,6 @@ void D3D::Initialize()
 	CreateRenderTargetView();
 	SettingViewPort();
 	InitShader();
-
-
 }
 
 void D3D::InitShader()
@@ -221,7 +219,6 @@ void D3D::Draw()
 
 void D3D::Update()
 {
-	Draw();
 	//スワップ（バックバッファを表に表示する）
 	pSwapChain->Present(0, 0);
 }

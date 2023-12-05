@@ -18,8 +18,6 @@ void ImGuiManager::Update()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	Feature();
-	ImGui::End();
 	
 }
 
@@ -38,7 +36,7 @@ void ImGuiManager::Feature()
 		if (ImGui::Button("button")) {
 			PostQuitMessage(0);	//ƒvƒƒOƒ‰ƒ€I—¹
 		}
-
+	ImGui::End();
 }
 
 void ImGuiManager::Release()
