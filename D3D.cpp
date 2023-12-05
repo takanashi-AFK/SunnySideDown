@@ -3,8 +3,7 @@
 #include <d3dcompiler.h>
 
 
-D3D::D3D(HWND _hWnd)
-	:hWnd_(_hWnd),
+D3D::D3D():
 	scDesc({}),
 
 	pDevice(nullptr),
@@ -23,8 +22,9 @@ D3D::~D3D()
 {
 }
 
-void D3D::Initialize()
+void D3D::Initialize(HWND _hWnd)
 {
+	_hWnd = hWnd_;
 	SetSCchain();
 	CreateDevContSc();
 	CreateRenderTargetView();

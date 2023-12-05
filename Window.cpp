@@ -36,9 +36,9 @@ Window::Window(HINSTANCE _hInstance, int _nCmdShow)
 void Window::Initialize()
 {
     CreateWndClass();
-    pD3D = new D3D(hWnd);
-    pD3D->Initialize();
-    ImGuiManager::Initialize(hWnd,pD3D);
+    D3D& pD3D = D3D::GetInstance();
+    pD3D.Initialize(hWnd);
+    ImGuiManager::Initialize(hWnd,&pD3D);
 }
 
 void Window::Execute()

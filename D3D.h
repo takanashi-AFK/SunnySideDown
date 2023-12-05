@@ -15,10 +15,15 @@ class Quad;
 
 class D3D
 {
-public:
+private:
 	D3D();
-	D3D(HWND _hWnd);
 	~D3D();
+public:
+	static D3D& GetInstance() {
+		static D3D instance;
+		return instance;
+	}
+
 	//rendering
 
 	/// <summary>
@@ -37,7 +42,7 @@ public:
 	/// <summary>
 	/// Execute those function
 	/// </summary>
-	void Initialize();
+	void Initialize(HWND _hWnd);
 
 	ID3D11Device* pDevice;						//デバイス
 	ID3D11DeviceContext* pContext;				//デバイスコンテキスト
@@ -64,7 +69,6 @@ public:
 	//other
 	HWND hWnd_;
 	DXGI_SWAP_CHAIN_DESC scDesc;
-	Quad* qu;
-	void Release();
+  	void Release();
 };
 
