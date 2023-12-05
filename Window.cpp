@@ -49,6 +49,7 @@ void Window::Execute()
 
 void Window::MsgLoop()
 {
+    D3D& pD3D = D3D::GetInstance();
     //メッセージループ（何か起きるのを待つ）
     MSG msg;
     ZeroMemory(&msg, sizeof(msg));
@@ -66,11 +67,11 @@ void Window::MsgLoop()
         {
             ImGuiManager::Update();
             ImGuiManager::Feature();
-            pD3D->Draw();
+            pD3D.Draw();
             ImGuiManager::Draw();
 
             //ゲームの処理
-            pD3D->Update();
+            pD3D.Update();
         }
     }
 }

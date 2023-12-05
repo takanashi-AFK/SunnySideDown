@@ -24,7 +24,7 @@ D3D::~D3D()
 
 void D3D::Initialize(HWND _hWnd)
 {
-	_hWnd = hWnd_;
+	hWnd_ = _hWnd;
 	SetSCchain();
 	CreateDevContSc();
 	CreateRenderTargetView();
@@ -92,6 +92,7 @@ void D3D::CreateRasterizer()
 
 void D3D::SetSCchain()
 {
+
 	///////////////////////////‚¢‚ë‚¢‚ë€”õ‚·‚é‚½‚ß‚Ìİ’è///////////////////////////////
 	//‚¢‚ë‚¢‚ë‚Èİ’è€–Ú‚ğ‚Ü‚Æ‚ß‚½\‘¢‘Ì
 	ZeroMemory(&scDesc, sizeof(scDesc));
