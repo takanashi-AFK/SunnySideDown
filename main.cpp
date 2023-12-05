@@ -2,7 +2,6 @@
 #include <Windows.h>
 #include"Window.h"
 #include"D3D.h"
-#include"Quad.h"
 
 
 //エントリーポイント

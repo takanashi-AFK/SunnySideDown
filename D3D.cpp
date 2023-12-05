@@ -1,7 +1,6 @@
 #include "D3D.h"
 #include <iostream>
 #include <d3dcompiler.h>
-#include"Quad.h"
 
 
 D3D::D3D(HWND _hWnd)
@@ -32,9 +31,6 @@ void D3D::Initialize()
 	SettingViewPort();
 	InitShader();
 
-	//Quadの初期化
-	qu= new Quad(this);
-	qu->Initialize();
 
 }
 
@@ -219,8 +215,6 @@ void D3D::Draw()
 	//深度バッファクリア
 	pContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-	//描画処理
-	qu->Draw();
 }
 
 void D3D::Update()
