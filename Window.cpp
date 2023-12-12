@@ -43,6 +43,7 @@ void Window::Initialize()
     ImGuiManager::Initialize(hWnd,&pD3D);
     qu = new Quad;
     qu->Initialize();
+
 }
 
 void Window::Execute()
