@@ -3,6 +3,7 @@
 #include "D3D.h"
 #include <DirectXMath.h>
 #include "AssimpLoader.h"
+#include <vector>
 using namespace DirectX;
 
 const string modelFile = "Assets/Alicia/FBX/Alicia_solid_Unity.FBX";
@@ -22,10 +23,10 @@ public:
 	void Draw();
 	void Release();
 
-	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
-	ID3D11Buffer* pIndexBuffer_;
-	ID3D11Buffer* pConstantBuffer_;	//コンスタントバッファ
-	 
+	vector<ID3D11Buffer*> pVertexBufferList_;	//頂点バッファ
+	vector<ID3D11Buffer*> pIndexBufferList_;
+	vector<ID3D11Buffer*> pConstantBufferList_;	//コンスタントバッファ
+
 	vector<Mesh> importMeshes;
 	vector<Vertex> meshVertex;
 	vector<uint32_t> meshIndex;

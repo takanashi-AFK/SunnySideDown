@@ -13,7 +13,6 @@ bool AssimpLoader::Load(ImportSettings *setting)
 	auto inverseU = setting->inverseU;
 	auto inverseV = setting->inverseV;
     
-
 	string path = (setting->filename);
 
     int flag = 0;
@@ -26,7 +25,7 @@ bool AssimpLoader::Load(ImportSettings *setting)
     flag |= aiProcess_RemoveRedundantMaterials;
     flag |= aiProcess_OptimizeMeshes;
 
-    auto scene = importer.ReadFile(path, flag);
+    const aiScene* scene = importer.ReadFile(path, flag);
     if (scene == nullptr)
     {
         MessageBox(nullptr, importer.GetErrorString(), "Error!!", 0);
@@ -82,13 +81,13 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         vertex.Color = DirectX::XMFLOAT4(color->r, color->g, color->b, color->a);
 
         dst.Vertices[i] = vertex;
-        for (unsigned int i = 0u; i < src->mNumFaces; ++i)
+        for (unsigned int j = 0u; j < src->mNumFaces; ++j)
         {
-            const auto& face = src->mFaces[i];
+            const auto& face = src->mFaces[j];
 
-            dst.Indices[i * 3 + 0] = face.mIndices[0];
-            dst.Indices[i * 3 + 1] = face.mIndices[1];
-            dst.Indices[i * 3 + 2] = face.mIndices[2];
+            dst.Indices[j * 3 + 0] = face.mIndices[0];
+            dst.Indices[j * 3 + 1] = face.mIndices[1];
+            dst.Indices[j * 3 + 2] = face.mIndices[2];
         }
     }
 
