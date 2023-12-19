@@ -54,7 +54,7 @@ void D3D::InitVertexShader()
 
 	//Vartex Input Layout
 	//入力されたバッファがどんなデータ構造か
-	D3D11_INPUT_ELEMENT_DESC layout[] = {
+	D3D11_INPUT_ELEMENT_DESC layout[] = {	
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },	//位置
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, sizeof(DirectX::XMFLOAT2), D3D11_INPUT_PER_VERTEX_DATA, 0},	//テクスチャ（UV）座標
 	};

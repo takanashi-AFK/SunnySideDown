@@ -58,18 +58,18 @@ void Quad::Initialize()
 
 		// インデックスバッファを生成する
 		ID3D11Buffer* pIndexBuffer;
-		D3D11_BUFFER_DESC   bd;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.ByteWidth = sizeof(uint32_t) * meshIndex.size();
-		bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		bd.CPUAccessFlags = 0;
-		bd.MiscFlags = 0;
+		D3D11_BUFFER_DESC   bd_index;
+		bd_index.Usage = D3D11_USAGE_DEFAULT;
+		bd_index.ByteWidth = sizeof(uint32_t) * meshIndex.size();
+		bd_index.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		bd_index.CPUAccessFlags = 0;
+		bd_index.MiscFlags = 0;
 	
 		D3D11_SUBRESOURCE_DATA InitData;
 		InitData.pSysMem = meshIndex.data();
 		InitData.SysMemPitch = 0;
 		InitData.SysMemSlicePitch = 0;
-		pD3D.pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer);
+		pD3D.pDevice->CreateBuffer(&bd_index, &InitData, &pIndexBuffer);
 
 		pIndexBufferList_.push_back(pIndexBuffer);
 
