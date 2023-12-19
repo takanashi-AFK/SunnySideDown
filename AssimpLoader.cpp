@@ -38,8 +38,8 @@ bool AssimpLoader::Load(ImportSettings *setting)
     {
         const auto pMesh = scene->mMeshes[i];
         LoadMesh(meshes[i], pMesh, inverseU, inverseV);
-        const auto pMaterial = scene->mMaterials[i];
-        LoadTexture(setting->filename, meshes[i], pMaterial);
+        //const auto pMaterial = scene->mMaterials[i];
+        //LoadTexture(setting->filename, meshes[i], pMaterial);
     }
 
     scene = nullptr;

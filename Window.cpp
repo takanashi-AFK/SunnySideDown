@@ -72,9 +72,9 @@ void Window::MsgLoop()
             ImGuiManager::Update();
             ImGuiManager::Feature();
             pD3D.Draw();
+            qu->Draw();
             ImGuiManager::Draw();
 
-            qu->Draw();
 
             //ÉQÅ[ÉÄÇÃèàóù
             pD3D.Update();
@@ -87,19 +87,15 @@ HWND Window::GetHWnd()
     return hWnd;
 }
 
-
-
 void Window::Release()
 {
     SAFE_DELETE(hWnd);
     SAFE_DELETE(hInstance_);
 }
 
-
 Window::~Window()
 {
 }
-
 
 void Window::CreateWndClass()
 {
