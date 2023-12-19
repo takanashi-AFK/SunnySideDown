@@ -12,7 +12,6 @@ Quad::~Quad()
 }
 void Quad::Initialize()
 {
-
 	ImportSettings importSetting = // ‚±‚ê©‘Ì‚Í©ì‚Ì“Ç‚İ‚İİ’è\‘¢‘Ì
 	{
 		modelFile,

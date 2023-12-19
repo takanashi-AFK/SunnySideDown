@@ -53,7 +53,6 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
     aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     dst.Vertices.resize(src->mNumVertices);
-    dst.Indices.resize(src->mNumFaces * 3);
 
     for (unsigned int i = 0; i < src->mNumVertices; ++i)
     {
@@ -81,6 +80,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         vertex.Color = DirectX::XMFLOAT4(color->r, color->g, color->b, color->a);
 
         dst.Vertices[i] = vertex;
+        dst.Indices.resize(src->mNumFaces * 3);
         for (unsigned int j = 0u; j < src->mNumFaces; ++j)
         {
             const auto& face = src->mFaces[j];
