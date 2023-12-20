@@ -47,7 +47,7 @@ void Quad::Initialize()
 		bd_vertex.CPUAccessFlags = 0;
 		bd_vertex.MiscFlags = 0;
 		bd_vertex.StructureByteStride = 0;
-		D3D11_SUBRESOURCE_DATA data_vertex;
+		D3D11_SUBRESOURCE_DATA data_vertex{};
 
 		data_vertex.pSysMem = meshVertex.data();
 		pD3D.pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer);
