@@ -99,7 +99,7 @@ void Quad::Draw()
 		XMVECTOR position = { 0, 140, 100, 0 };	//カメラの位置
 		XMVECTOR target = { 0, 120, 0, 0 };	//カメラの焦点
 		XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
-		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
+		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 1000.0f);//射影行列
 
 		CONSTANT_BUFFER cb;
 		cb.matWVP = XMMatrixTranspose(view * proj);
@@ -110,7 +110,7 @@ void Quad::Draw()
 		pD3D.pContext->Unmap(pConstantBufferList_[i], 0);	//再開
 
 		//頂点バッファ
-		UINT stride = sizeof(XMVECTOR);
+		UINT stride = sizeof(Vertex);
 		UINT offset = 0;
 		pD3D.pContext->IASetVertexBuffers(0, 1, &pVertexBufferList_[i], &stride, &offset);
 
