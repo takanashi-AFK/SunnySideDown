@@ -32,65 +32,6 @@ void D3D::Initialize(HWND _hWnd)
 	InitShader();
 }
 
-void D3D::InitShader()
-{
-	InitVertexShader();
-	InitPixelShader();
-	CreateRasterizer();
-
-	//setting for Device Context
-	pContext->VSSetShader(pVertexShader, NULL, 0);	//VertexShader
-	pContext->PSSetShader(pPixelShader, NULL, 0);	//PixelShader
-	pContext->IASetInputLayout(pVertexLayout);	//VertexShader
-	pContext->RSSetState(pRasterizerState);		//Rasterizer
-}
-
-void D3D::InitVertexShader()
-{// create Vertex Shader
-	ID3DBlob* pCompileVS = nullptr;
-	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
-
-	pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
-
-	//Vartex Input Layout
-	//入力されたバッファがどんなデータ構造か
-	D3D11_INPUT_ELEMENT_DESC layout[] = {
-
-	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-
-	pDevice->CreateInputLayout(layout, 1, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
-
-	pCompileVS->Release();
-}
-
-void D3D::InitPixelShader()
-{// create Pixel Shader
-	ID3DBlob* pCompilePS = nullptr;
-	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
-
-	pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
-
-	pCompilePS->Release();
-}
-
-void D3D::CreateRasterizer()
-{//Create Rasterizer
-
-	D3D11_RASTERIZER_DESC rdc = {};
-
-	//////////CULL MODE IS HERE//////////
-	rdc.CullMode = D3D11_CULL_BACK;
-	rdc.FillMode = D3D11_FILL_SOLID;
-	//////////CULL MODE IS HERE//////////
-
-	rdc.FrontCounterClockwise = FALSE;
-	pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
-}
-
-
-
 void D3D::SetSCchain()
 {
 
@@ -138,7 +79,6 @@ void D3D::CreateDevContSc()
 		char msg[128];
 		sprintf_s(msg, "D3D11CreateDeviceAndSwapChain failed with error 0x%X", hr);
 		MessageBoxA(nullptr, msg, "Error", MB_OK | MB_ICONERROR);
-		
 	}
 }
 
@@ -190,6 +130,63 @@ void D3D::SettingViewPort()
 	pContext->RSSetViewports(1, &vp);
 }
 
+void D3D::InitShader()
+{
+	InitVertexShader();
+	InitPixelShader();
+	CreateRasterizer();
+
+	//setting for Device Context
+	pContext->VSSetShader(pVertexShader, NULL, 0);	//VertexShader
+	pContext->PSSetShader(pPixelShader, NULL, 0);	//PixelShader
+	pContext->IASetInputLayout(pVertexLayout);	//VertexShader
+	pContext->RSSetState(pRasterizerState);		//Rasterizer
+}
+
+void D3D::InitVertexShader()
+{// create Vertex Shader
+	ID3DBlob* pCompileVS = nullptr;
+	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+
+	pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &pVertexShader);
+
+	//Vartex Input Layout
+	//入力されたバッファがどんなデータ構造か
+	D3D11_INPUT_ELEMENT_DESC layout[] = {
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, sizeof(DirectX::XMFLOAT3), D3D11_INPUT_PER_VERTEX_DATA, 0},
+	};
+
+	pDevice->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), &pVertexLayout);
+
+	pCompileVS->Release();
+}
+
+void D3D::InitPixelShader()
+{// create Pixel Shader
+	ID3DBlob* pCompilePS = nullptr;
+	D3DCompileFromFile(L"Simple3D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
+
+	pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), pCompilePS->GetBufferSize(), NULL, &pPixelShader);
+
+	pCompilePS->Release();
+}
+
+void D3D::CreateRasterizer()
+{//Create Rasterizer
+
+	D3D11_RASTERIZER_DESC rdc = {};
+
+	//////////CULL MODE IS HERE//////////
+	rdc.CullMode = D3D11_CULL_BACK;
+	rdc.FillMode = D3D11_FILL_SOLID;
+	//////////CULL MODE IS HERE//////////
+
+	rdc.FrontCounterClockwise = FALSE;
+	pDevice->CreateRasterizerState(&rdc, &pRasterizerState);
+}
+
+
 void D3D::Release()
 {
 	pRasterizerState->Release();
@@ -216,8 +213,6 @@ void D3D::Draw()
 	pContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 }
-
-
 
 void D3D::Update()
 {

@@ -57,7 +57,7 @@ void Quad::Initialize()
 		meshIndex = mesh.Indices;
 
 		// インデックスバッファを生成する
-		ID3D11Buffer* pIndexBuffer ;
+		ID3D11Buffer* pIndexBuffer;
 		D3D11_BUFFER_DESC   bd;
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.ByteWidth = sizeof(uint32_t) * meshIndex.size();

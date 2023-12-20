@@ -22,14 +22,15 @@ struct VS_OUT
 //───────────────────────────────────────
 // 頂点シェーダ
 //───────────────────────────────────────
-VS_OUT VS(float4 pos : POSITION)
+VS_OUT VS(float4 pos : POSITION,float2 uv : TEXCOORD)
 {
-	//ピクセルシェーダーへ渡す情報
+	//ピクセルシェーダーへ渡す,f情報
     VS_OUT outData;
 
 	//ローカル座標に、ワールド・ビュー・プロジェクション行列をかけて
 	//スクリーン座標に変換し、ピクセルシェーダーへ
     outData.pos = mul(pos, matWVP);
+    outData.uv = uv;
 	//まとめて出力
     return outData;
 }
@@ -39,5 +40,5 @@ VS_OUT VS(float4 pos : POSITION)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
-    return float4(1,1, 1, 1);
+    return float4(inData.uv.xy, 1, 1);
 }

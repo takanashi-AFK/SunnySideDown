@@ -115,7 +115,7 @@ void Window::CreateWndClass()
 
     ////////////////クラスの設定///////////////
     wc.cbSize = sizeof(WNDCLASSEX);             //この構造体のサイズ
-    wc.hInstance = hInstance_;                   //インスタンスハンドル
+    wc.hInstance = hInstance_;                  //インスタンスハンドル
     wc.lpszClassName = "SampleGame";            //ウィンドウクラス名
     wc.lpfnWndProc = WndProc;                   //ウィンドウプロシージャ
     wc.style = CS_VREDRAW | CS_HREDRAW;         //スタイル（デフォルト）

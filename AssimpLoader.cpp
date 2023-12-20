@@ -58,7 +58,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
     {
         auto position = &(src->mVertices[i]);
         auto normal = &(src->mNormals[i]);
-        auto uv = (src->HasTextureCoords(0)) ? &(src->mTextureCoords[0][i]) : &zero3D;
+        auto uv = (src->HasTextureCoords(0)) ? &(src->mTextureCoords[0][i]) : &zero3D;  
         auto tangent = (src->HasTangentsAndBitangents()) ? &(src->mTangents[i]) : &zero3D;
         auto color = (src->HasVertexColors(0)) ? &(src->mColors[0][i]) : &zeroColor;
 
