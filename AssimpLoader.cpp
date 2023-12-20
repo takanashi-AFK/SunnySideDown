@@ -75,7 +75,7 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         Vertex vertex = {};
         vertex.Position = DirectX::XMFLOAT3(position->x, position->y, position->z);
         vertex.Normal = DirectX::XMFLOAT3(normal->x, normal->y, normal->z);
-        vertex.UV = DirectX::XMFLOAT2(uv->x, uv->y);
+        vertex.UV = DirectX::XMFLOAT2(-uv->x, uv->y);
         vertex.Tangent = DirectX::XMFLOAT3(tangent->x, tangent->y, tangent->z);
         vertex.Color = DirectX::XMFLOAT4(color->r, color->g, color->b, color->a);
 
