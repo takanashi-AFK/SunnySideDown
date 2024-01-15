@@ -17,7 +17,7 @@ void Quad::Initialize()
 		modelFile,
 		importMeshes,
 		false,
-		false // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
+		true // アリシアのモデルは、テクスチャのUVのVだけ反転してるっぽい？ので読み込み時にUV座標を逆転させる
 	};
 
 	D3D& pD3D = D3D::GetInstance();
@@ -93,37 +93,35 @@ void Quad::Initialize()
 void Quad::Draw()
 {
 	D3D& pD3D = D3D::GetInstance();
-	for (int i = 0; i < importMeshes.size(); ++i)
+	for (int i = 0;i < importMeshes.size();++i)
 	{
-		// 各メッシュごとに異なるビュー行列や射影行列などの情報を設定する
-		XMVECTOR position = { 0, 140, 100, 0 };
-		XMVECTOR target = { 0, 120, 0, 0 };
-		XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0)); // メッシュごとのビュー行列
-		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 1000.0f); // メッシュごとの射影行列
+		//コンスタントバッファに渡す情報
+		XMVECTOR position = { 0, 140, 100, 0 };	//カメラの位置
+		XMVECTOR target = { 0, 120, 0, 0 };	//カメラの焦点
+		XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
+		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
 
-		CONSTANT_BUFFER cb = {};
+		CONSTANT_BUFFER cb;
 		cb.matWVP = XMMatrixTranspose(view * proj);
 
 		D3D11_MAPPED_SUBRESOURCE pdata;
-		pD3D.pContext->Map(pConstantBufferList_[i], 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata); // GPUからのデータアクセスを止める
-		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb)); // データを値を送る
-		pD3D.pContext->Unmap(pConstantBufferList_[i], 0); // 再開
+		pD3D.pContext->Map(pConstantBufferList_[i], 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+		pD3D.pContext->Unmap(pConstantBufferList_[i], 0);	//再開
 
-		// 各メッシュの描画を行う
-		UINT stride = sizeof(Vertex);
+		//頂点バッファ
+		UINT stride = sizeof(XMVECTOR);
 		UINT offset = 0;
-
-		//頂点バッファをセット
 		pD3D.pContext->IASetVertexBuffers(0, 1, &pVertexBufferList_[i], &stride, &offset);
 
-		//インデックスバッファをセット
+		// インデックスバッファーをセット
 		pD3D.pContext->IASetIndexBuffer(pIndexBufferList_[i], DXGI_FORMAT_R32_UINT, 0);
 
-		// メッシュごとのコンスタントバッファをセット
-		pD3D.pContext->VSSetConstantBuffers(0, 1, &pConstantBufferList_[i]); // 頂点シェーダー用    
-		pD3D.pContext->PSSetConstantBuffers(0, 1, &pConstantBufferList_[i]); // ピクセルシェーダー用
+		//コンスタントバッファ
+		pD3D.pContext->VSSetConstantBuffers(0, 1, &pConstantBufferList_[i]);	//頂点シェーダー用	
+		pD3D.pContext->PSSetConstantBuffers(0, 1, &pConstantBufferList_[i]);	//ピクセルシェーダー用
+		pD3D.pContext->DrawIndexed(importMeshes[i].Indices.size(), 0, 0);
 
-		pD3D.pContext->DrawIndexed(importMeshes[i].Indices.size(), 0, 0); // メッシュごとの描画
 	}
 }
 
