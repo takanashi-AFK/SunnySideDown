@@ -13,7 +13,6 @@ struct CONSTANT_BUFFER
 	XMMATRIX	matWVP;
 };
 
-
 class Quad
 {
 public:
