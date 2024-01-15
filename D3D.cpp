@@ -201,7 +201,7 @@ void D3D::Release()
 	pDevice->Release();
 }
 
-void D3D::Draw()
+void D3D::StartDraw()
 {
 	//ゲームの処理
 	//背景の色
@@ -215,7 +215,7 @@ void D3D::Draw()
 
 }
 
-void D3D::Update()
+void D3D::EndDraw()
 {
 	//スワップ（バックバッファを表に表示する）
 	pSwapChain->Present(0, 0);

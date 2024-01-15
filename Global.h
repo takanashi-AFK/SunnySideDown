@@ -1,7 +1,7 @@
 #pragma once
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+const float WINDOW_WIDTH = 1280.0f;
+const float WINDOW_HEIGHT = 720.0f;
 
 #define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;}
 

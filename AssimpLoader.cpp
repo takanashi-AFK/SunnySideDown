@@ -15,8 +15,8 @@ bool AssimpLoader::Load(ImportSettings *setting)
     
 	string path = (setting->filename);
 
+    //フラグの指定
     int flag = 0;
-
     flag |= aiProcess_Triangulate;
     flag |= aiProcess_PreTransformVertices;
     flag |= aiProcess_CalcTangentSpace;
@@ -25,6 +25,7 @@ bool AssimpLoader::Load(ImportSettings *setting)
     flag |= aiProcess_RemoveRedundantMaterials;
     flag |= aiProcess_OptimizeMeshes;
 
+    //ファイル読み込み
     const aiScene* scene = importer.ReadFile(path, flag);
     if (scene == nullptr)
     {
@@ -37,10 +38,13 @@ bool AssimpLoader::Load(ImportSettings *setting)
 
     for (size_t i = 0; i < scene->mNumMeshes; ++i)
     {
+        //メッシュがあればロード
         if (scene->HasMeshes()) {
         const auto pMesh = scene->mMeshes[i];
         LoadMesh(meshes[i], pMesh, inverseU, inverseV);
         }
+
+
     }
 
     return true;

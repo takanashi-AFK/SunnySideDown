@@ -10,6 +10,7 @@ Quad::Quad()
 Quad::~Quad()
 {
 }
+
 void Quad::Initialize()
 {
 	ImportSettings importSetting = // これ自体は自作の読み込み設定構造体
@@ -99,11 +100,10 @@ void Quad::Draw()
 		XMVECTOR position = { 0, 140, 100, 0 };	//カメラの位置
 		XMVECTOR target = { 0, 120, 0, 0 };	//カメラの焦点
 		XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
-		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 1000.0f);//射影行列
+		XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, WINDOW_WIDTH / WINDOW_HEIGHT, 0.1f, 1000.0f);//射影行列
 
 		CONSTANT_BUFFER cb;
-		cb.matWVP = XMMatrixTranspose(view * proj);
-
+		cb.matWVP = XMMatrixTranspose(view * proj);//ここにあとでworldMatrixかける
 		D3D11_MAPPED_SUBRESOURCE pdata;
 		pD3D.pContext->Map(pConstantBufferList_[i], 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る

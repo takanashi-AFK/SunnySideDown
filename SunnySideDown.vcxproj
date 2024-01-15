@@ -148,6 +148,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="ImGui\imstb_truetype.h" />
     <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="Quad.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>

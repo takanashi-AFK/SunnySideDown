@@ -71,13 +71,13 @@ void Window::MsgLoop()
         {
             ImGuiManager::Update();
             ImGuiManager::Feature();
-            pD3D.Draw();
+            pD3D.StartDraw();
             ImGuiManager::Draw();
 
             qu->Draw();
 
             //ÉQÅ[ÉÄÇÃèàóù
-            pD3D.Update();
+            pD3D.EndDraw();
         }
     }
 }
@@ -93,6 +93,7 @@ void Window::Release()
 {
     SAFE_DELETE(hWnd);
     SAFE_DELETE(hInstance_);
+    ImGuiManager::Release();
 }
 
 

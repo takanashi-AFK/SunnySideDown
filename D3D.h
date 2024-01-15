@@ -59,8 +59,8 @@ public:
 	void InitVertexShader();
 	void InitPixelShader();
 	void CreateRasterizer();
-	void Draw();
-	void Update();
+	void StartDraw();
+	void EndDraw();
 
 	ID3D11VertexShader* pVertexShader;			//頂点シェーダー
 	ID3D11PixelShader* pPixelShader;			//ピクセルシェーダー

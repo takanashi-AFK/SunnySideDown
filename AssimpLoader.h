@@ -37,6 +37,11 @@ struct aiMaterial;
         bool inverseV = false; // V座標を反転させるか
     };
 
+    //struct Material {
+    //    bool hasTexture;
+    //    vector<Texture*> diffuseTextures;	//ディヒューズテクスチャ情報
+    //    DirectX::XMFLOAT4 diffuse;					//ディヒューズカラー情報
+    //};
 
 
 class AssimpLoader
@@ -46,4 +51,5 @@ class AssimpLoader
  private:
     void LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool inverseV);
     void LoadTexture(const string filename, Mesh& dst, const aiMaterial* src);
+  //  void LoadMaterial(const)
 };
