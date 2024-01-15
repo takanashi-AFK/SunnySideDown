@@ -38,6 +38,7 @@ struct aiMaterial;
     };
 
 
+
 class AssimpLoader
 {
  public:

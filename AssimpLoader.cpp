@@ -34,15 +34,14 @@ bool AssimpLoader::Load(ImportSettings *setting)
 
     meshes.clear();
     meshes.resize(scene->mNumMeshes);
-    for (size_t i = 0; i < meshes.size(); ++i)
+
+    for (size_t i = 0; i < scene->mNumMeshes; ++i)
     {
+        if (scene->HasMeshes()) {
         const auto pMesh = scene->mMeshes[i];
         LoadMesh(meshes[i], pMesh, inverseU, inverseV);
-        const auto pMaterial = scene->mMaterials[i];
-        LoadTexture(setting->filename, meshes[i], pMaterial);
+        }
     }
-
-    scene = nullptr;
 
     return true;
 }
@@ -52,9 +51,10 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
     aiVector3D zero3D(0.0f, 0.0f, 0.0f);
     aiColor4D zeroColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+    dst.Vertices.clear();
     dst.Vertices.resize(src->mNumVertices);
 
-    for (unsigned int i = 0; i < src->mNumVertices; ++i)
+    for (int i = 0; i < src->mNumVertices; ++i)
     {
         auto position = &(src->mVertices[i]);
         auto normal = &(src->mNormals[i]);
@@ -73,9 +73,9 @@ void AssimpLoader::LoadMesh(Mesh& dst, const aiMesh* src, bool inverseU, bool in
         }
 
         Vertex vertex = {};
-        vertex.Position = DirectX::XMFLOAT3(position->x, position->y, position->z);
+        vertex.Position = DirectX::XMFLOAT3(-position->x, position->y, position->z);
         vertex.Normal = DirectX::XMFLOAT3(normal->x, normal->y, normal->z);
-        vertex.UV = DirectX::XMFLOAT2(-uv->x, uv->y);
+        vertex.UV = DirectX::XMFLOAT2(uv->x, uv->y);
         vertex.Tangent = DirectX::XMFLOAT3(tangent->x, tangent->y, tangent->z);
         vertex.Color = DirectX::XMFLOAT4(color->r, color->g, color->b, color->a);
 
