@@ -1,4 +1,9 @@
 //───────────────────────────────────────
+// テクスチャ＆サンプラーデータのグローバル変数定義
+//───────────────────────────────────────
+Texture2D	g_texture : register(t0);	//テクスチャー
+SamplerState	g_sampler : register(s0);	//サンプラー
+//───────────────────────────────────────
  // コンスタントバッファ
 // DirectX 側から送信されてくる、ポリゴン頂点以外の諸情報の定義
 //───────────────────────────────────────
@@ -40,5 +45,5 @@ VS_OUT VS(float4 pos : POSITION,float2 uv : TEXCOORD)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
-    return float4(inData.uv.xy, 1, 1);
+    return g_texture.Sample(g_sampler, inData.uv);
 }
