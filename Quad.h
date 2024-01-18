@@ -4,6 +4,8 @@
 #include <DirectXMath.h>
 #include "AssimpLoader.h"
 #include <vector>
+#include "Texture.h"
+
 using namespace DirectX;
 
 const string modelFile = "Assets/Alicia/FBX/Alicia_solid_Unity.FBX";
@@ -15,6 +17,9 @@ struct CONSTANT_BUFFER
 
 class Quad
 {
+
+	Texture* pTexture_;
+
 public:
 	Quad();
 	~Quad();

@@ -89,6 +89,8 @@ void Quad::Initialize()
 
 		pConstantBufferList_.push_back(pConstantBuffer);
 	}
+	pTexture_ = new Texture;
+	pTexture_->Load()
 }
 
 void Quad::Draw()
