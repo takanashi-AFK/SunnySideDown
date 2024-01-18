@@ -126,5 +126,6 @@
     <None Include="Assimp\dll\zlib1.dll">
       <Filter>Assimp</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include <wincodec.h>
+#include<filesystem>
 
 #pragma comment( lib, "WindowsCodecs.lib" )
 
@@ -13,12 +14,39 @@ Texture::~Texture()
 
 HRESULT Texture::Load(std::string fileName)
 {
+	std::filesystem::path filePath = fileName;
+	std::string ext = filePath.extension().string();
+
+	if(ext == ".png"||ext == ".jpeg" || ext == ".PNG" || ext == ".JPEG")
+		if (!LoadFromCommonPic(fileName)) {
+#ifdef _DEBUG
+			MessageBox(nullptr, "LoadFromCommonPic", "Error!", 0);
+#endif // _DEBUG
+		}
+
+	if (ext == ".tga")
+		if (!LoadFromOtherPic(fileName)) {
+#ifdef _DEBUG
+			MessageBox(nullptr, "LoadFromOtherPic", "Error!", 0);
+#endif // _DEBUG
+		}
+	
+
+}
+
+void Texture::Release()
+{
+	delete pSampler_;
+	delete pSRV_;
+}
+
+bool Texture::LoadFromCommonPic(std::string _fileName)
+{
 	D3D& pD3D = D3D::GetInstance();
 	wchar_t wtext[FILENAME_MAX];
 	size_t ret;
-	mbstowcs_s(&ret, wtext, fileName.c_str(), fileName.length());
+	mbstowcs_s(&ret, wtext, _fileName.c_str(), _fileName.length());
 	CoInitialize(nullptr);
-
 
 	IWICImagingFactory* pFactory = nullptr;
 	IWICBitmapDecoder* pDecoder = nullptr;
@@ -68,17 +96,14 @@ HRESULT Texture::Load(std::string fileName)
 	srv.Texture2D.MipLevels = 1;
 	pD3D.pDevice->CreateShaderResourceView(pTexture, &srv, &pSRV_);
 	pTexture->Release();
-
-	CoUninitialize();
-	return S_OK;
-
+	return true;
 }
 
-void Texture::Release()
+bool Texture::LoadFromOtherPic(std::string fileName)
 {
-	delete pSampler_;
-	delete pSRV_;
+	return false;
 }
+
 
 ID3D11SamplerState* Texture::GetSampler()
 {

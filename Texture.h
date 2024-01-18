@@ -15,6 +15,9 @@ public:
 	HRESULT Load(std::string fileName);
 	void Release();
 
+	bool LoadFromCommonPic(std::string fileName);
+	bool LoadFromOtherPic(std::string fileName);
+
 	ID3D11SamplerState* GetSampler();
 	ID3D11ShaderResourceView* GetSRV();
 
