@@ -4,7 +4,6 @@
 #include <DirectXMath.h>
 #include "AssimpLoader.h"
 #include <vector>
-#include "Texture.h"
 
 using namespace DirectX;
 
@@ -17,8 +16,6 @@ struct CONSTANT_BUFFER
 
 class Quad
 {
-
-	Texture* pTexture_;
 
 public:
 	Quad();
